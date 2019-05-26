@@ -144,6 +144,7 @@
               </label>
             </div>
             <a class="button is-info">Register</a>
+            <a href="#" class="signup-member"><u>I am already a member</u></a>
           </div>
         </div>
       </div>
