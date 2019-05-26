@@ -81,16 +81,74 @@
 </nav>
 <br>
 <section class="is-centered-left">
-  <div class="container">
+<div class="container">
   <div class="columns is-vcentered">
-  <div class="column is-8">
-  </div>
-  <div class="column">
-  <div class="card">
-    helo</div>
-  </div>
+    <div class="column is-7">
+    </div>
+  <div class="column is-5 adjust">
+    <div class="box">
+      <div class="box-content">
+        <div class="content">
+            <h3>Sign Up</h3>
+          <div class="field">
+            <label class="label">Username</label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input" type="text" placeholder="(e.g: JohnSmith1348)" name="username">
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-asterisk"></i>
+              </span>
+            </div>
+            <label class="label">Email Address</label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input" type="email" placeholder="example@outlook.com" name="email">
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-asterisk"></i>
+              </span>
+            </div>
+            <label class="label">Password</label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input" type="password" placeholder="************" name="password">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-asterisk"></i>
+              </span>
+            </div>
+            <label class="label">Confirm Password</label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input" type="password" placeholder="************" name="confirmpassword">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-asterisk"></i>
+              </span>
+            </div>
+            <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox">
+                I am over 18 and agree to the <a href="#">Terms of User</a> and 
+                <a href="#">Privacy Policy.</a>
+              </label>
+              <label class="checkbox cb-next">
+                <input type="checkbox" checked="checked">
+                I want to subscribe to your newsletter.
+              </label>
+            </div>
+            <a class="button is-info">Register</a>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
-  </div>
 </section>
 </body>
 </html>
