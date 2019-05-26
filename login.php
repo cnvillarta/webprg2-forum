@@ -3,7 +3,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en" class="has-signup-bg">
+<html lang="en" class="has-login-bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,9 +83,7 @@
 <section class="is-centered-left">
 <div class="container">
   <div class="columns is-vcentered">
-    <div class="column is-7">
-    </div>
-  <div class="column is-5 adjust">
+    <div class="column is-5 adjust-left">
     <div class="box">
       <div class="box-content">
         <div class="content">
@@ -122,6 +120,8 @@
           </div>
         </div>
       </div>
+    </div>
+  <div class="column is-7">
     </div>
 </div>
 </section>
