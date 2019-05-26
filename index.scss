@@ -12,6 +12,10 @@ html, body, #app {
   background: url('images/signup wallpaper 3.jpg');
 }
 
+.has-login-bg{ 
+  background: url('images/login wallpaper.jpg');
+}
+
 .is-section-articles{
   margin-top:2%;
 }
@@ -78,6 +82,58 @@ min-height: 100%;
   color: #3D3D3D;
 }
 
+.adjust-right{
+  margin-top: -6%;
+  padding-left: 5%;
+}
+
+.adjust-left{
+  margin-top: -6%;
+  padding-left: 5%;
+}
+
+label.label{
+  padding-top: 3px;
+}
+
+label.checkbox{
+  padding-top: 20px;
+  font-size: 14px;
+}
+
+label.cb-next{
+  padding-top: 5px;
+  font-size: 14px;
+  padding-bottom: 20px;
+}
+
+a.signup-member{
+  font-size: 14px;
+  color: #222;
+  margin-top: 3.7%;
+  float:right;
+}
+
+a.forgot-password{
+  font-size: 14px;
+  color: #F03C3C;
+  margin-top: 20px;
+  float:right;
+}
+
+.fixed-bottom{
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 70px;
+  margin-bottom: 0px;
+}
+
+.scroll-hidden{
+  overflow-x: hidden;
+}
+
 i.fas {
   display: inline-block;
   border-radius: 60px;
@@ -90,4 +146,9 @@ i.fas {
   #menu-toggle:checked + .nav-menu {
     display: block;
   }
+}
+
+::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
 }

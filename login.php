@@ -17,7 +17,7 @@
     <link rel="shortcut icon" href="images/warframe_logo_1__GaU_icon.ico" />
     <title>WARFRAME</title>
 </head>
-<body class="has-navbar-fixed-top">
+<body class="has-navbar-fixed-top scroll-hidden">
 <nav class="navbar is-fixed-top is-transparent is-light" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="index.php">
@@ -125,5 +125,10 @@
     </div>
 </div>
 </section>
+<footer class="footer fixed-bottom"  style="background-color: #696969; padding: 2rem 2rem 2rem 2rem; margin-top: 0.27rem;">
+    <div class="content has-text-centered">
+    <p><strong>WARFRAME</strong> Forum by Maurice Figueras and Chlouie Villarta.</p>
+    </div>
+</footer>
 </body>
 </html>
