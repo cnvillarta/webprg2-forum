@@ -114,10 +114,19 @@ session_start();
             </div>
         </section>
         <br>
-        <footer class="footer"  style="background-color: #696969; padding: 2rem 2rem 2rem 2rem; margin-top: 0.27rem;">
+    </body>
+            <a class="button is-info">Register</a>
+            <a href="#" class="signup-member"><u>I am already a member</u></a>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</section>
+<footer class="footer"  style="background-color: #696969; padding: 2rem 2rem 2rem 2rem; margin-top: 0.27rem;">
             <div class="content has-text-centered">
             <p><strong>WARFRAME</strong> Forum by Maurice Figueras and Chlouie Villarta.</p>
             </div>
         </footer>
-    </body>
+</body>
 </html>
