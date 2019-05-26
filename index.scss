@@ -1,0 +1,93 @@
+html, body, #app {
+  height: 100%;
+}
+
+.has-bg-img { 
+  background: url('images/jovian accord.jpg'); 
+  background-size:cover; 
+  padding-top: 5em;
+}
+
+.has-signup-bg{ 
+  background: url('images/signup wallpaper 3.jpg');
+}
+
+.is-section-articles{
+  margin-top:2%;
+}
+
+.is-centered-left{
+  padding-top:10%;
+}
+
+.is-header-dark{
+  background-color:#3D3D3D;
+  color: white;
+}
+
+.is-card-content-first{
+  align-items: stretch;
+  display: flex;
+  padding: 0.75rem;
+}
+
+.is-card-content-next{
+  border-top: 1px solid #dbdbdb;
+  align-items: stretch;
+  display: flex;
+  padding: 0.75rem;
+}
+
+.is-header-title-dark{
+  background-color:#3D3D3D;
+  color: white;
+  letter-spacing: 1px;
+  border-radius: 4px 4px 0 0;
+  font-size: 1.25em;
+  font-weight: 300;
+  line-height: 1.25;
+  padding: 0.5em 0.75em;
+}
+
+#app {
+min-height: 100%;
+  //display: flex;
+  //flex-direction: column;
+}
+
+.main-content {
+  //flex: 1;
+}
+
+.footer {
+  margin-top: -12px;
+}
+
+.card-icon{
+  padding-right: 1em;
+}
+
+.card-header-icon{
+  color: white;
+  .card-header-icon:hover{
+    color: white;
+  }
+}
+
+.redirect-link{
+  color: #3D3D3D;
+}
+
+i.fas {
+  display: inline-block;
+  border-radius: 60px;
+  box-shadow: 0px 0px 2px #888;
+  padding: 0.5em 0.6em;
+
+}
+
+@media screen and (max-width: 768px) {
+  #menu-toggle:checked + .nav-menu {
+    display: block;
+  }
+}
