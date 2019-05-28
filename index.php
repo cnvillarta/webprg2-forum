@@ -54,7 +54,7 @@
             Updates
           </a>
           <a class="navbar-item"> <!-- href="index.php/forum/community"-->
-            Community
+          Technical Discussions
           </a>
           <a class="navbar-item"> <!-- href="index.php/forum/reports"-->
             Reports
@@ -107,7 +107,7 @@
                 <span class="card-icon">
                   <i class="fas fa-comments fa-lg" aria-hidden="true"></i>
                 </span>
-                <h5><a href="#" class="redirect-link">Announcements</a></h5>
+                <h5><a href="Updates/Announcements.php" class="redirect-link">Announcements</a></h5>
               </div>
               <div class="content">
                 <div class="is-card-content-next">
@@ -187,51 +187,20 @@
   </div>
 
 <!-- SIDEBAR -->
-<aside class="column is-3 is-narrow-mobile is-fullheight section">
+<aside class="container column is-3 is-narrow-mobile is-fullheight section">
     <nav class="panel">
       <p class="panel-heading is-header-dark">
         Latest Topics
       </p>
       <div class="panel-block">
-        <article class="media">
-          <figure class="media-left">
-            <p class="image is-64x64">
-              <img src="https://bulma.io/images/placeholders/128x128.png">
-            </p>
-          </figure>
-          <div class="media-content">
-            <div class="content">
-              <p>
-                <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
-                <br>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
-              </p>
-            </div>
-            <nav class="level is-mobile">
-              <div class="level-left">
-                <a class="level-item">
-                  <span class="icon is-small"><i class="fas fa-reply"></i></span>
-                </a>
-                <a class="level-item">
-                  <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-                </a>
-                <a class="level-item">
-                  <span class="icon is-small"><i class="fas fa-heart"></i></span>
-                </a>
-              </div>
-            </nav>
-          </div>
-          <div class="media-right">
-            <button class="delete"></button>
-          </div>
-        </article>
+          <a class="twitter-timeline" data-width="438" data-height="700" href="https://twitter.com/PlayWarframe?ref_src=twsrc%5Etfw">Tweets by PlayWarframe</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </div>
     </nav>
-  </aside>
+</aside>
 </section>
 <footer class="footer"  style="background-color: #696969; padding: 2rem 2rem 2rem 2rem; margin-top: 0.27rem;">
     <div class="content has-text-centered">
-    <p><strong>WARFRAME</strong> Forum by Maurice Figueras and Chlouie Villarta.</p>
+      <p><strong>WARFRAME</strong> Forum by Maurice Figueras and Chlouie Villarta.</p>
     </div>
 </footer>
 </body>
