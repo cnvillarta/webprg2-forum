@@ -3,9 +3,8 @@ html, body, #app {
 }
 
 .has-bg-img { 
-  background: url('images/jovian accord.jpg'); 
-  background-size:cover; 
-  padding-top: 5em;
+  background: url('images/warframe logo bg.png'); 
+  background-size: cover;
 }
 
 .has-signup-bg{ 
@@ -16,6 +15,10 @@ html, body, #app {
   background: url('images/login wallpaper.jpg');
 }
 
+.has-profile-bg{ 
+  background: url('images/profile wallpaper.jpg');
+}
+
 .is-section-articles{
   margin-top:2%;
 }
@@ -24,9 +27,22 @@ html, body, #app {
   padding-top:10%;
 }
 
+.panel-is-transparent{
+  background-color: transparent;
+}
+
 .is-header-dark{
   background-color:#3D3D3D;
   color: white;
+}
+
+.is-header-light{
+  background-color: #F5F5F5;
+  color:  #3D3D3D;
+}
+
+.is-content-dark{
+  background-color: #D6D6D6;
 }
 
 .is-card-content-first{
@@ -40,6 +56,10 @@ html, body, #app {
   align-items: stretch;
   display: flex;
   padding: 0.75rem;
+}
+
+.is-size-8{
+  font-size: 14px;
 }
 
 .is-header-title-dark{
@@ -63,6 +83,40 @@ min-height: 100%;
   //flex: 1;
 }
 
+.top-adjust{
+  padding-top: 5%;
+}
+
+.panel-title{
+  font-weight: 460;
+  letter-spacing: 1px;
+}
+
+.panel-desc1{
+  padding-left: 35%;
+}
+
+.panel-desc2{
+  padding-left: 41%;
+}
+
+.panel-desc3{
+  padding-left: 36%;
+}
+
+.panel-desc4{
+  padding-left: 37%;
+}
+
+.panel-block{
+  border: none;
+}
+
+.is-sticky{
+  position: sticky; 
+  left: 0;
+}
+
 .footer {
   margin-top: -12px;
 }
@@ -76,6 +130,66 @@ min-height: 100%;
   .card-header-icon:hover{
     color: white;
   }
+}
+
+.section.is-prev{
+  margin-top: 10%;
+}
+
+.section.is-next{
+  margin-top: -20%;
+}
+
+.content-align{
+  padding-left: 2%;
+  padding-top: 4%;
+  padding-bottom: 2%;
+}
+
+.content-align-center{
+  padding-top:5%;
+}
+
+.image.is-180x180 {
+  height: 180px;
+  width: 180px;
+  padding-top: 10%;
+  margin-left: 20%;
+}
+
+.is-flex{
+  display:flex
+}
+
+.columns{
+  display: flex;
+  border-radius: 5px;
+  padding: 10px;
+  justify-content: space-around;
+}
+
+.column{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-direction: column;
+}
+
+.panel.panel-is-light{
+  background-color: white;
+}
+
+
+.column-dark{
+  background-color: #EBEBEB;
+}
+
+.column-light{
+  background-color: #F2F2F2;
+}
+
+.icon-background{
+  color: #D6D6D6;
 }
 
 .redirect-link{

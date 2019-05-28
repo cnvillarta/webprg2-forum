@@ -3,7 +3,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-bg-img">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,12 +79,6 @@
     </div>
   </div>
 </nav>
-<section class="hero is-dark is-medium has-bg-img">
-  <div class="hero-body">
-    <div class="container">
-    </div>
-  </div>
-</section>
 
 <!-- CONTENT -->
 <section class="main-content columns is-fullheight">
@@ -185,10 +179,9 @@
       </div>
     </div>
   </div>
-
 <!-- SIDEBAR -->
-<aside class="container column is-3 is-narrow-mobile is-fullheight section">
-    <nav class="panel">
+<aside class="container column is-3">
+    <nav class="panel panel-is-light">
       <p class="panel-heading is-header-dark">
         Latest Topics
       </p>
