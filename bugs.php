@@ -78,7 +78,45 @@
           <a class="button is-primary" href="signup.php">
             <strong>Sign up</strong>
           </a>
-          <a class="button is-light" href="login.php">
+          <div class="modal" id="loginModal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Login</p>
+                <button class="modal-close is-large" id="closeLogin" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body">
+                <div class="field">
+                  <label class="label">Username</label>
+                  <input class="input" type="text" placeholder="Enter your username" name="username">
+                </div>
+                <div class="field">
+                  <label class="label">Password</label>
+                  <input class="input" type="password" placeholder="Enter your password" name="password">
+                </div>
+                <label class="checkbox">
+                <input type="checkbox">
+                    Remember Me
+                </label>
+                <a href="#" class="forgot-password">Forgot password?</a>
+              </section>
+              <footer class="modal-card-foot" style="padding: 1rem 2rem;">
+                <nav class="navbar is-light">
+                  <div class="navbar-start">
+                    <div class="navbar-item">
+                      <a class="button is-info">Log In</a>
+                    </div>
+                  </div>
+                  <div class="navbar-end">
+                    <div class="navbar-item">
+                      Not a member? <a href="signup.php"><u>Click here to sign up.</u></a>
+                    </div>
+                  </div>
+                </nav>
+              </footer>
+            </div>
+          </div>
+          <a class="button is-light" id="login">
             Log in
           </a>
         </div>
@@ -88,7 +126,7 @@
 </nav>
 <section class="hero is-dark is-medium has-bg-img">
   <div class="hero-body">
-    <div class="container">
+    <div class="container" style="max-width:100%;">
     </div>
   </div>
 </section>
@@ -110,7 +148,7 @@
             <div class="modal-card">
               <header class="modal-card-head">
                 <p class="modal-card-title">'.$row['title'].'</p>
-                <button class="modal-close is-large" aria-label="close"></button>
+                <button class="modal-close is-large" id="closeModal'.$i.'" "aria-label="close"></button>
               </header>
               <section class="modal-card-body">'.$row['content'].'</section>
               <footer class="modal-card-body">
@@ -126,7 +164,7 @@
                   <a id="openModal'.$i.'"><p class="card-header-title">'.$row['title'].'</p></a>
               </header>
               <div class="card-content">
-                  <div class="content">'.$row['content'].'</div>
+                  <div class="content" style="height:  3em; overflow: hidden;">'.$row['content'].'</div>
               </div>
               <footer class="card-footer">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -141,10 +179,10 @@
             header("location: error.php");
           }else{
             echo '<nav class="pagination footer is-centered" role="navigation" aria-label="pagination" style="padding: 2rem 2rem 2rem">
-              <a class="pagination-previous" href = "?page='.--$page.'">Previous</a>
+              <a class="pagination-previous" href = "?page='.$page.'">Previous</a>
               <ul class="pagination-list">
+              <li class="pagination-link"><a class="page-link" href = "?page='.$page.'">'.$page.'</a></li>
                 <li class="pagination-link" disabled>'.++$page.'</li>
-                <li class="pagination-link"><a class="page-link" href = "?page='.++$page.'">'.$page.'</a></li>
               </ul>
             </nav>';
 
@@ -204,16 +242,16 @@ if($result = mysqli_query($conn,$sql)){
     var btn'.$i.' = document.getElementById("openModal'.$i.'");
     
     // Get the <span> element that closes the modal
-    var span'.$i.' = document.getElementById("contentModal'.$i.'");
+    var close'.$i.' = document.getElementById("closeModal'.$i.'");
     
     // When the user clicks on the button, open the modal 
     btn'.$i.'.onclick = function() {
-      modal'.$i.'.classList.add("is-active");
+      modal'.$i.'.classList.toggle("is-active");
     }
     
     // When the user clicks on <span> (x), close the modal
-    span'.$i.'.onclick = function() {
-      modal'.$i.'.classList.remove("is-active");
+    close'.$i.'.onclick = function() {
+      modal'.$i.'.classList.toggle("is-active");
     }
     
     // When the user clicks anywhere outside of the modal, close it
@@ -226,6 +264,25 @@ if($result = mysqli_query($conn,$sql)){
   }
 }
 ?>
+var login = document.getElementById("login");
+
+var loginModal = document.getElementById("loginModal");
+
+var closeLogin = document.getElementById("closeLogin");
+
+login.onclick=function(){
+  loginModal.classList.toggle("is-active");
+}
+
+closeLogin.onclick = function(){
+  loginModal.classList.toggle("is-active");
+}
+
+window.onclick = function(event){
+  if(event.target == loginModal){
+    loginModal.classList.remove("is-active");
+  }
+}
 </script>
 </body>
 </html>
