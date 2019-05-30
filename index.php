@@ -135,8 +135,9 @@
             <div class="content">
               <div class="is-card-content-first">
                 <span class="card-icon">
-                  <i class="fas fa-comments fa-lg" aria-hidden="true"></i>
+                  <i class="fas fa-flag fa-lg" aria-hidden="true"></i>
                 </span>
+                <h5><a href="bugs.php" class="redirect-link">Bugs</a></h5>
               </div>
           </div>
         </div>
