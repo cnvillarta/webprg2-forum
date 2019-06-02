@@ -216,23 +216,54 @@
         $sql = "SELECT * FROM posts order by id desc LIMIT " . $offset . ", " . $count;
         $i = 0;
         if($result = mysqli_query($conn,$sql)){
-          while($row = mysqli_fetch_assoc($result)){
-            echo '<div class="modal" id="contentModal'.++$i.'">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">'.$row['title'].'</p>
-                  <button class="modal-close is-large" id="closeModal'.$i.'" "aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">'.$row['content'].'</section>
-                <footer class="modal-card-body">
-                    <a><i class="far fa-arrow-alt-circle-up" onclick="upvote()"></i></a>&nbsp;'
-                    .$row['votes'].
-                    '&nbsp;<a><i class="far fa-arrow-alt-circle-down" onclick="downvote()"></i></a>
-                </footer>
-                <section class="modal-card-foot">Hey fuck you!</section>
-              </div>
-            </div>';
+          while($row = mysqli_fetch_array($result)){
+            if($row['image']){
+              $output_hex_string = $row['image'];
+              $output_bin_string = base64_decode($output_hex_string);
+
+              echo '<div class="modal" id="contentModal'.++$i.'">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">'.$row['title'].'</p>
+                    <button class="modal-close is-large" id="closeModal'.$i.'" "aria-label="close"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <div class="content is-pulled-left">
+                      <figure class="image is-128x128">
+                        <img src="data:image/png;base64,'.base64_encode($output_bin_string).'">
+                      </figure>
+                    </div>
+                    <p>'.$row['content'].'</p>
+                  </section>
+                  <footer class="modal-card-body">
+                      <a><i class="far fa-arrow-alt-circle-up" onclick="upvote()"></i></a>&nbsp;'
+                      .$row['votes'].
+                      '&nbsp;<a><i class="far fa-arrow-alt-circle-down" onclick="downvote()"></i></a>
+                  </footer>
+                  <section class="modal-card-foot">Hey fuck you!</section>
+                </div>
+              </div>';
+            }else{
+              echo '<div class="modal" id="contentModal'.++$i.'">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">'.$row['title'].'</p>
+                    <button class="modal-close is-large" id="closeModal'.$i.'" "aria-label="close"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    '.$row['content'].'
+                  </section>
+                  <footer class="modal-card-body">
+                      <a><i class="far fa-arrow-alt-circle-up" onclick="upvote()"></i></a>&nbsp;'
+                      .$row['votes'].
+                      '&nbsp;<a><i class="far fa-arrow-alt-circle-down" onclick="downvote()"></i></a>
+                  </footer>
+                  <section class="modal-card-foot">Hey fuck you!</section>
+                </div>
+              </div>';
+            }
             echo '<div class="card" style="padding: 2rem 2rem 2rem 2rem;">
                 <header class="card-header">
                     <a id="openModal'.$i.'"><p class="card-header-title">'.$row['title'].'</p></a>
@@ -298,11 +329,16 @@
           <button class="modal-close is-large" id="close"></button>
         </header>
         <section class="modal-card-body">
-          <form action="createpost.php" method="post">
+          <form action="createpost.php" method="post" enctype="multipart/form-data">
             <div class="field">
               <div class="control">
                 <label class="label">Title</label>
                 <input class="input" type="text" placeholder="An interesting title" name="title">
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <input type="file" name="image">
               </div>
             </div>
             <div class="field">
@@ -398,6 +434,16 @@ opencreate.onclick=function(){
 close.onclick = function(){
   create.classList.toggle("is-active");
 }
+
+var file = document.getElementById("file");
+file.onchange = function(){
+    if(file.files.length > 0)
+    {
+
+      document.getElementById('filename').innerHTML = 					file.files[0].name;
+
+    }
+};
 
 </script>
 </body>
