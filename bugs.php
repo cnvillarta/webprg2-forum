@@ -134,83 +134,155 @@
 <section class="main-content columns is-fullheight"  style="flex: 1;">
     <div class="container column is-9">
       <?php
-      $total_pages_sql = "SELECT COUNT(id) FROM posts";
-      $result = mysqli_query($conn,$total_pages_sql);
-      $total_rows = mysqli_fetch_assoc($result);
-      $total_pages = ceil($total_rows['COUNT(id)'] / $count);
-      $offset = ($page - 1) * $count;
-      $sql = "SELECT * FROM posts order by id desc LIMIT " . $offset . ", " . $count;
-      $i = 0;
-      if($result = mysqli_query($conn,$sql)){
-        while($row = mysqli_fetch_assoc($result)){
-          echo '<div class="modal" id="contentModal'.++$i.'">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-              <header class="modal-card-head">
-                <p class="modal-card-title">'.$row['title'].'</p>
-                <button class="modal-close is-large" id="closeModal'.$i.'" "aria-label="close"></button>
-              </header>
-              <section class="modal-card-body">'.$row['content'].'</section>
-              <footer class="modal-card-body">
+      if(isset($_GET['filter'])){
+        $total_pages_sql = "SELECT COUNT(id) FROM posts WHERE tags = '".$_GET['filter']."'";
+        $result = mysqli_query($conn,$total_pages_sql);
+        $total_rows = mysqli_fetch_assoc($result);
+        $total_pages = ceil($total_rows['COUNT(id)'] / $count);
+        $offset = ($page - 1) * $count;
+        $sql = "SELECT * FROM posts WHERE tags = '".$_GET['filter']."' order by id desc LIMIT " . $offset . ", " . $count;
+        $i = 0;
+        if($result = mysqli_query($conn,$sql)){
+          while($row = mysqli_fetch_assoc($result)){
+            echo '<div class="modal" id="contentModal'.++$i.'">
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">'.$row['title'].'</p>
+                  <button class="modal-close is-large" id="closeModal'.$i.'" "aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">'.$row['content'].'</section>
+                <footer class="modal-card-body">
+                    <a><i class="far fa-arrow-alt-circle-up" onclick="upvote()"></i></a>&nbsp;'
+                    .$row['votes'].
+                    '&nbsp;<a><i class="far fa-arrow-alt-circle-down" onclick="downvote()"></i></a>
+                </footer>
+                <section class="modal-card-foot">Hey fuck you!</section>
+              </div>
+            </div>';
+            echo '<div class="card" style="padding: 2rem 2rem 2rem 2rem;">
+                <header class="card-header">
+                    <a id="openModal'.$i.'"><p class="card-header-title">'.$row['title'].'</p></a>
+                </header>
+                <div class="card-content">
+                    <div class="content" style="height:  3em; overflow: hidden;">'.$row['content'].'</div>
+                </div>
+                <footer class="card-footer">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <a><i class="far fa-arrow-alt-circle-up" onclick="upvote()"></i></a>&nbsp;'
                   .$row['votes'].
                   '&nbsp;<a><i class="far fa-arrow-alt-circle-down" onclick="downvote()"></i></a>
-              </footer>
-              <section class="modal-card-foot">Hey fuck you!</section>
-            </div>
-          </div>';
-          echo '<div class="card" style="padding: 2rem 2rem 2rem 2rem;">
-              <header class="card-header">
-                  <a id="openModal'.$i.'"><p class="card-header-title">'.$row['title'].'</p></a>
-              </header>
-              <div class="card-content">
-                  <div class="content" style="height:  3em; overflow: hidden;">'.$row['content'].'</div>
-              </div>
-              <footer class="card-footer">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a><i class="far fa-arrow-alt-circle-up" onclick="upvote()"></i></a>&nbsp;'
-                .$row['votes'].
-                '&nbsp;<a><i class="far fa-arrow-alt-circle-down" onclick="downvote()"></i></a>
-              </footer>
-          </div>';
-        }
-        if($page >= $total_pages){
-          if(($page > $total_pages)){
-            header("location: error.php");
-          }else{
-            echo '<nav class="pagination footer is-centered" role="navigation" aria-label="pagination" style="padding: 2rem 2rem 2rem">
-              <a class="pagination-previous" href = "?page='.$page.'">Previous</a>
-              <ul class="pagination-list">
-              <li class="pagination-link"><a class="page-link" href = "?page='.$page.'">'.$page.'</a></li>
-                <li class="pagination-link" disabled>'.++$page.'</li>
-              </ul>
-            </nav>';
-
+                </footer>
+            </div>';
           }
-        }else if($page > 1) {
-          echo '<nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                  <a class="pagination-previous" href="?page='.--$page.'">Previous</a>
-                  <ul class="pagination-list">
-                    <li class="pagination-link"><a class="page-link" href = "?page='.$page.'">'.$page.'</a></li>
-                    <li class="pagination-link" disabled>'.++$page.'</li>
-                    <li class="pagination-link"><a class="page-link" href = "?page='.++$page.'">'.$page.'</a></li>
-                  </ul>
-                  <a class="pagination-next" href="?page='.$page.'">Next page</a>
-                </nav>';
-        }else if( $page == 1 ) {
-          echo '<nav class="pagination" role="navigation" aria-label="pagination">
-                  <ul class="pagination-list">
-                    <li class="pagination-link" disabled>'.$page.'</li>
-                    <li class="pagination-link"><a class="page-link" href = "?page='.++$page.'">'.$page.'</a></li>
-                    <a class="pagination-next">Next page</a>
-                  </ul>
-                </nav>';
+          if($page > $total_pages){
+            header("location: error.php");
+          }else if($page == $total_pages){
+              echo '<nav class="pagination footer is-centered" role="navigation" aria-label="pagination" style="padding: 2rem 2rem 2rem">
+                <a class="pagination-previous" href = "?filter='.$_GET['filter'].'&page='.$page.'">Previous</a>
+                <ul class="pagination-list">
+                <li class="pagination-link"><a class="page-link" href = "?filter='.$_GET['filter'].'&page='.$page.'">'.$page.'</a></li>
+                  <li class="pagination-link" disabled>'.++$page.'</li>
+                </ul>
+              </nav>';
+          }else if($page > 1) {
+            echo '<nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                    <a class="pagination-previous" href="?filter='.$_GET['filter'].'&page='.--$page.'">Previous</a>
+                    <ul class="pagination-list">
+                      <li class="pagination-link"><a class="page-link" href = "?filter='.$_GET['filter'].'&page='.$page.'">'.$page.'</a></li>
+                      <li class="pagination-link" disabled>'.++$page.'</li>
+                      <li class="pagination-link"><a class="page-link" href = "?filter='.$_GET['filter'].'&page='.++$page.'">'.$page.'</a></li>
+                    </ul>
+                    <a class="pagination-next" href="?filter='.$_GET['filter'].'&page='.$page.'">Next page</a>
+                  </nav>';
+          }else if( $page == 1 ) {
+            echo '<nav class="pagination" role="navigation" aria-label="pagination">
+                    <ul class="pagination-list">
+                      <li class="pagination-link" disabled>'.$page.'</li>
+                      <li class="pagination-link"><a class="page-link" href = "?filter='.$_GET['filter'].'&page='.++$page.'">'.$page.'</a></li>
+                      <a class="pagination-next">Next page</a>
+                    </ul>
+                  </nav>';
+          }
+        }else{
+          echo '<div>No results found</div>';
+        }
+      }else{
+        $total_pages_sql = "SELECT COUNT(id) FROM posts";
+        $result = mysqli_query($conn,$total_pages_sql);
+        $total_rows = mysqli_fetch_assoc($result);
+        $total_pages = ceil($total_rows['COUNT(id)'] / $count);
+        $offset = ($page - 1) * $count;
+        $sql = "SELECT * FROM posts order by id desc LIMIT " . $offset . ", " . $count;
+        $i = 0;
+        if($result = mysqli_query($conn,$sql)){
+          while($row = mysqli_fetch_assoc($result)){
+            echo '<div class="modal" id="contentModal'.++$i.'">
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">'.$row['title'].'</p>
+                  <button class="modal-close is-large" id="closeModal'.$i.'" "aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">'.$row['content'].'</section>
+                <footer class="modal-card-body">
+                    <a><i class="far fa-arrow-alt-circle-up" onclick="upvote()"></i></a>&nbsp;'
+                    .$row['votes'].
+                    '&nbsp;<a><i class="far fa-arrow-alt-circle-down" onclick="downvote()"></i></a>
+                </footer>
+                <section class="modal-card-foot">Hey fuck you!</section>
+              </div>
+            </div>';
+            echo '<div class="card" style="padding: 2rem 2rem 2rem 2rem;">
+                <header class="card-header">
+                    <a id="openModal'.$i.'"><p class="card-header-title">'.$row['title'].'</p></a>
+                </header>
+                <div class="card-content">
+                    <div class="content" style="height:  3em; overflow: hidden;">'.$row['content'].'</div>
+                </div>
+                <footer class="card-footer">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a><i class="far fa-arrow-alt-circle-up" onclick="upvote()"></i></a>&nbsp;'
+                  .$row['votes'].
+                  '&nbsp;<a><i class="far fa-arrow-alt-circle-down" onclick="downvote()"></i></a>
+                </footer>
+            </div>';
+          }
+          if($page > $total_pages){
+            header("location: error.php");
+          }else if($page == $total_pages){
+              echo '<nav class="pagination footer is-centered" role="navigation" aria-label="pagination" style="padding: 2rem 2rem 2rem">
+                <a class="pagination-previous" href = "?page='.$page.'">Previous</a>
+                <ul class="pagination-list">
+                <li class="pagination-link"><a class="page-link" href = "?page='.$page.'">'.$page.'</a></li>
+                <li class="pagination-link" disabled>'.++$page.'</li>
+                </ul>
+              </nav>';
+          }else if($page > 1) {
+            echo '<nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                    <a class="pagination-previous" href="?page='.--$page.'">Previous</a>
+                    <ul class="pagination-list">
+                      <li class="pagination-link"><a class="page-link" href = "?page='.$page.'">'.$page.'</a></li>
+                      <li class="pagination-link" disabled>'.++$page.'</li>
+                      <li class="pagination-link"><a class="page-link" href = "?page='.++$page.'">'.$page.'</a></li>
+                    </ul>
+                    <a class="pagination-next" href="?page='.$page.'">Next page</a>
+                  </nav>';
+          }else if( $page == 1 ) {
+            echo '<nav class="pagination" role="navigation" aria-label="pagination">
+                    <ul class="pagination-list">
+                      <li class="pagination-link" disabled>'.$page.'</li>
+                      <li class="pagination-link"><a class="page-link" href = "?page='.++$page.'">'.$page.'</a></li>
+                      <a class="pagination-next">Next page</a>
+                    </ul>
+                  </nav>';
+          }
         }
       }
       ?>
     </div>
     <nav class="panel container column is-2">
-    <a><p class="panel-heading" id="createpost">Create a post</p></a>
+      <a><p class="panel-heading" id="createpost">Create a post</p></a>
       <p class="panel-heading">Filter Posts</p>
       <a class="panel-block" href="?filter=bugs">Bugs</a>
       <a class="panel-block" href="?filter=technical">Technical Discussions</a>
@@ -243,7 +315,7 @@
               <div class="control">
                 <label class="label">Tag</label>
                 <div class="select">
-                  <select>
+                  <select name="tag">
                     <option value="bugs">Bugs</option>
                     <option value="technical">Techincal Discussions</option>
                     <option value="art">Artworks</option>
@@ -298,6 +370,7 @@ if($result = mysqli_query($conn,$sql)){
     ';
   }
 }
+mysqli_close($conn);
 ?>
 var login = document.getElementById("login");
 
@@ -314,7 +387,9 @@ closeLogin.onclick = function(){
 }
 
 var create = document.getElementById("newpost");
+
 var opencreate = document.getElementById("createpost");
+
 var close = document.getElementById("close");
 
 opencreate.onclick=function(){
