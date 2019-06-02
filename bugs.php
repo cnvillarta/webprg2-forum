@@ -132,7 +132,7 @@
 </section>
 
 <section class="main-content columns is-fullheight"  style="flex: 1;">
-    <div class="container column is-8">
+    <div class="container column is-9">
       <?php
       $total_pages_sql = "SELECT COUNT(id) FROM posts";
       $result = mysqli_query($conn,$total_pages_sql);
@@ -209,16 +209,58 @@
       }
       ?>
     </div>
-    <div class="container column is-3">
-        <div class="card">
-            <div class="card-header is-header-dark">
-                    <p class="card-header-title is-header-title-dark">
-                    &nbsp;Create New Post</p>
+    <nav class="panel container column is-2">
+    <a><p class="panel-heading" id="createpost">Create a post</p></a>
+      <p class="panel-heading">Filter Posts</p>
+      <a class="panel-block" href="?filter=bugs">Bugs</a>
+      <a class="panel-block" href="?filter=technical">Technical Discussions</a>
+      <a class="panel-block" href="?filter=art">Artworks</a>
+      <a class="panel-block" href="?filter=memes">Memes</a>
+      <a class="panel-block" href="?filter=announcements">Official Announcements</a>
+    </nav>
+    <div class="modal" id="newpost">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Create New Post</p>
+          <button class="modal-close is-large" id="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <form action="createpost.php" method="post">
+            <div class="field">
+              <div class="control">
+                <label class="label">Title</label>
+                <input class="input" type="text" placeholder="An interesting title" name="title">
+              </div>
             </div>
-            <div class="card-header is-header-dark">
-                <p class="card-header-title is-header-title-dark">&nbsp;Filter Posts</p>
+            <div class="field">
+              <div class="control">
+                <label class="label">Content</label>
+                <textarea class="textarea" type="text" name="content" rows="10"></textarea>
+              </div>
             </div>
-        </div>
+            <div class="field">
+              <div class="control">
+                <label class="label">Tag</label>
+                <div class="select">
+                  <select>
+                    <option value="bugs">Bugs</option>
+                    <option value="technical">Techincal Discussions</option>
+                    <option value="art">Artworks</option>
+                    <option value="memes">Memes</option>
+                    <option value="announcements">Official Announcements</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <button class="button is-link">Submit</button>
+              </div>
+            </div>
+          </form>
+        </section>
+      </div>
     </div>
 </section>
 
@@ -253,13 +295,6 @@ if($result = mysqli_query($conn,$sql)){
     close'.$i.'.onclick = function() {
       modal'.$i.'.classList.toggle("is-active");
     }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal'.$i.') {
-        modal'.$i.'.classList.remove("is-active");
-      }
-    }
     ';
   }
 }
@@ -278,11 +313,17 @@ closeLogin.onclick = function(){
   loginModal.classList.toggle("is-active");
 }
 
-window.onclick = function(event){
-  if(event.target == loginModal){
-    loginModal.classList.remove("is-active");
-  }
+var create = document.getElementById("newpost");
+var opencreate = document.getElementById("createpost");
+var close = document.getElementById("close");
+
+opencreate.onclick=function(){
+  create.classList.toggle("is-active");
 }
+close.onclick = function(){
+  create.classList.toggle("is-active");
+}
+
 </script>
 </body>
 </html>
