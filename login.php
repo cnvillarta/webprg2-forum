@@ -1,5 +1,36 @@
 <?php
-    session_start();
+  session_start();
+
+  include('db.php');
+
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    $email = mysqli_real_escape_string($conn,$_POST['email']);
+    $password = mysqli_real_escape_string($conn,$_POST['password']); 
+    
+    $sql = "SELECT * FROM users WHERE email = ? and password = ?";
+    $statement = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($statement, 'ss', $email, $password);
+    mysqli_stmt_execute($statement);
+    $result = mysqli_stmt_get_result($statement);
+    
+    $count = mysqli_num_rows($result);   
+  
+    if($count == 1) {
+       session_start();
+       $user = mysqli_fetch_assoc($result);
+       $_SESSION["email"] = $user['email'];
+       $_SESSION["username"] = $user['username'];
+       $_SESSION["rank"] = $user['rank'];
+       $_SESSION["status"] = $user['status'];
+       $_SESSION["userID"] = $user['userID'];
+
+       header("location:index.php");
+    }else {
+      header("location:login.php?msg=failed");
+    }
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +61,6 @@
       <span aria-hidden="true"></span>
     </a>
   </div>
-  
   <div id="navbarBasicExample" class="navbar-menu">
   <div class="navbar-start">
       <a class="navbar-item" href="https://www.warframe.com/game#keyart">
@@ -54,7 +84,7 @@
             Updates
           </a>
           <a class="navbar-item"> <!-- href="index.php/forum/community"-->
-            Community
+          Technical Discussions
           </a>
           <a class="navbar-item"> <!-- href="index.php/forum/reports"-->
             Reports
@@ -71,7 +101,7 @@
           <a class="button is-primary" href="signup.php">
             <strong>Sign up</strong>
           </a>
-          <a class="button is-light" href="signin.php">
+          <a class="button is-light" href="login.php">
             Log in
           </a>
         </div>
@@ -89,34 +119,43 @@
         <div class="content">
             <h3>Log In</h3>
           <div class="field">
+          <form method="POST" action="login.php">
+            <?php
+              if (isset($_GET["msg"]) && $_GET["msg"] == 'failed'){
+              echo "<div class=\"notification is-danger\">
+              <button class=\"delete\"></button>
+              <strong>Authentication Failed!</strong> Email and password did not match!
+              </div>";
+              }else if (isset($_GET["msg"]) && $_GET["msg"] == 'passwordupdated'){
+                echo "<div class=\"notification is-success\">
+                <button class=\"delete\"></button>
+                Password has been reset! Try loggin in.
+                </div>";
+                }
+            ?>
             <label class="label">Email Address</label>
-            <div class="control has-icons-left has-icons-right">
-              <input class="input" type="email" placeholder="example@outlook.com" name="email">
-              <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-              </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-asterisk"></i>
-              </span>
-            </div>
+              <div class="control has-icons-left has-icons-right">
+                <input class="input" type="email" name="email">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </div>
             <label class="label">Password</label>
-            <div class="control has-icons-left has-icons-right">
-              <input class="input" type="password" placeholder="************" name="password">
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-asterisk"></i>
-              </span>
+              <div class="control has-icons-left has-icons-right">
+                <input class="input" type="password" name="password">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </div>
+            <label class="checkbox">
+              <input type="checkbox" name="remember">
+              Remember Me
+            </label>
+              <a href="./forgotpassword.php" class="forgot-password" name="forgotPass">Forgot password?</a>
             </div>
-              <label class="checkbox">
-                <input type="checkbox">
-                Remember Me
-              </label>
-              <a href="#" class="forgot-password">Forgot password?</a>
-            </div>
-            <a class="button is-info">Log In</a>
+            <input class="button is-success" type="submit" value="Log In">
             <a href="signup.php" class="signup-member">Not a member? <u>Click here to sign up.</u></a>
+            </form>
           </div>
         </div>
       </div>
@@ -124,6 +163,16 @@
   <div class="column is-7">
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+    $notification = $delete.parentNode;
+    $delete.addEventListener('click', () => {
+      $notification.parentNode.removeChild($notification);
+    });
+  });
+});
+</script>
 </section>
 <footer class="footer fixed-bottom"  style="background-color: #696969; padding: 2rem 2rem 2rem 2rem; margin-top: 0.27rem;">
     <div class="content has-text-centered">
