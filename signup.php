@@ -1,5 +1,20 @@
 <?php
-    session_start();
+  session_start();
+
+  require_once('db.php');
+    if($_SERVER['REQUEST_METHOD'] == "POST"){
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $statement = mysqli_prepare($conn, 'INSERT INTO users(username, email, password) VALUES (?,?,?)');
+        mysqli_stmt_bind_param($statement,'sss', $username, $email, $password);
+        if(mysqli_stmt_execute($statement)){
+            header('Location:signup.php?msg=success');
+        }else{
+            header('Location:signup.php?msg=failed');
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +69,7 @@
             Updates
           </a>
           <a class="navbar-item"> <!-- href="index.php/forum/community"-->
-            Community
+          Technical Discussions
           </a>
           <a class="navbar-item"> <!-- href="index.php/forum/reports"-->
             Reports
@@ -67,15 +82,36 @@
     </div>
     <div class="navbar-end">
       <div class="navbar-item">
-        <div class="buttons">
+      <?php
+        if(isset($_SESSION['email'])){
+          echo'
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">'
+              . $_SESSION['username'] .
+            '</a>
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item" href="./profile.php">
+                Profile
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item" href="./logout.php">
+                Logout
+              </a>
+            </div>
+          </div>
+        </div>';
+        }else{
+        echo '<div class="buttons">
           <a class="button is-primary" href="signup.php">
             <strong>Sign up</strong>
           </a>
-          <a class="button is-light" href="login.php">
+          <a class="button is-light" href="./login.php">
             Log in
           </a>
         </div>
-      </div>
+      </div>';
+        }
+      ?>
     </div>
   </div>
 </nav>
@@ -90,14 +126,25 @@
         <div class="content">
             <h3>Sign Up</h3>
           <div class="field">
+          <?php
+              if (isset($_GET["msg"]) && $_GET["msg"] == 'failed'){
+              echo "<div class=\"notification is-danger\">
+              <button class=\"delete\"></button>
+              <strong>Error.</strong> Could not register account.
+              </div>";
+              }else if (isset($_GET["msg"]) && $_GET["msg"] == 'success'){
+                echo "<div class=\"notification is-success\">
+                <button class=\"delete\"></button>
+                Successfully created an account! Click <a href=\"./login.php\">here</a> to login.
+                </div>";
+                }
+            ?>
+            <form method="POST" action="signup.php">
             <label class="label">Username</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input" type="text" placeholder="(e.g: JohnSmith1348)" name="username">
+              <input class="input" type="text" placeholder="(e.g: JohnSmith1348)" name="username" required>
               <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
-              </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-asterisk"></i>
               </span>
             </div>
             <label class="label">Email Address</label>
@@ -106,9 +153,6 @@
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-asterisk"></i>
-              </span>
             </div>
             <label class="label">Password</label>
             <div class="control has-icons-left has-icons-right">
@@ -116,34 +160,19 @@
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-asterisk"></i>
-              </span>
-            </div>
-            <label class="label">Confirm Password</label>
-            <div class="control has-icons-left has-icons-right">
-              <input class="input" type="password" placeholder="************" name="confirmpassword">
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-asterisk"></i>
-              </span>
             </div>
             <div class="field">
             <div class="control">
               <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" required>
                 I am over 18 and agree to the <a href="#">Terms of User</a> and 
                 <a href="#">Privacy Policy.</a>
               </label>
-              <label class="checkbox cb-next">
-                <input type="checkbox" checked="checked">
-                I want to subscribe to your newsletter.
-              </label>
             </div>
-            <a class="button is-info">Register</a>
+            <br>
+            <input class="button is-success" type="submit" value="Register">
             <a href="login.php" class="signup-member">Already a member? <u>Click here to log in.</u></a>
+            <form>
           </div>
         </div>
       </div>
